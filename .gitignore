@@ -2,3 +2,8 @@ pyvenv.cfg
 Scripts
 Lib
 Include
+.ipynb_checkpoints
+.vscode
+Untitled.ipynb
+etc
+share
