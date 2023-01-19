@@ -2,7 +2,7 @@ import os, time
 from subprocess import Popen, PIPE
 
 
-def get_venv_folder():
+def get_venv_folder() -> str | None:
     """
     Get the name of virtual environment by checking if
     user is currently in an ``activated`` venv environment.
@@ -20,12 +20,25 @@ def get_venv_folder():
         return None
 
 
-def install_required_libraries(requirement_list: list):
+def install_jupyter_kernel() -> None:
+    """
+    Installs and sets up the kernel to the virtual
+    environment.
+    """
+    kernel_name = get_venv_folder()
+    proc = Popen(
+        f"ipython kernel install --user --name={kernel_name}", stdout=PIPE, shell=True
+    )
+    time.sleep(2)
+    print(proc.communicate()[0].decode("utf-8").strip())
+
+
+def install_required_libraries():
     """Installs, jupyter and kernel."""
 
     pkg_1 = "jupyter"
     if not get_venv_folder() == None:
-        print("All good, proceed!") #! debug
+        print("All good, proceed!")  #! debug
 
         # * always use context managers 😉
         # ? but context manager with Popen is unpredictable on windows
@@ -42,7 +55,6 @@ def install_required_libraries(requirement_list: list):
         print("Bad!")
 
 
-requirement_list = ["tabulate", "autopep8"]
-
-install_required_libraries(requirement_list)
+install_jupyter_kernel()
+# install_required_libraries()
 # get_venv_folder()
